@@ -1,1 +1,6 @@
 -- Migration number: 0001 	 2026-10-16T19:44:47.488Z
+CREATE TABLE links (
+    "slug" TEXT PRIMARY KEY NOT NULL,
+    "long_url" TEXT UNIQUE NOT NULL,
+    "created_at" TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
