@@ -13,6 +13,7 @@ export default {
 					'method': method, 'pathname': pathname }),
 					{ headers: { 'Content-Type': 'application/json' } });
 			} else if (fullurl.hostname === window.location.hostname && fullurl.protocol === "https:") {
+				// TODO: need to check how the fuck to get the proper host against which i'll be checking
 				if (pathname.length != 9) return new Response("Invalid slug length", { status: 404 });
 				for (var i = 1; i < pathname.length; i++) {
 					if (!sourcechars.includes(pathname[i])) {
