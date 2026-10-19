@@ -10,7 +10,9 @@ declare namespace Cloudflare {
 	}
 	interface Env extends __BaseEnv_Env {}
 }
-interface Env extends __BaseEnv_Env {}
+interface Env extends __BaseEnv_Env {
+    CREATE_RATE_LIMITER: RateLimit
+}
 declare module "*.txt" {
 	const value: string;
 	export default value;
