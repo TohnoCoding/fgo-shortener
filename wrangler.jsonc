@@ -9,12 +9,12 @@
 	"upload_source_maps": true,
 	"d1_databases": [
 		{
-			"binding": "DB1",
+			"binding": "DBLocal",
 			"database_name": "fgo-shortener-db",
 			"database_id": "00000000-0000-0000-0000-000000000001"
 		},
 		{
-			"binding": "DB",
+			"binding": "DBRemote",
 			"database_name": "fgo-shortener-db",
 			"database_id": "e7127f3f-a9b0-4dc5-9609-d03e28b2749f"
 		}
