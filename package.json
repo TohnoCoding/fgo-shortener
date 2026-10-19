@@ -12,9 +12,16 @@
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "^1.0.0",
+    "@types/cors": "^2.8.19",
     "@types/node": "^26.6.5",
     "typescript": "^5.5.2",
     "vitest": "~4.1.0",
     "wrangler": "^4.151.1"
+  },
+  "allowScripts": {
+    "cors@2.8.6": true,
+    "@types/cors@2.8.19": true,
+    "esbuild@0.28.2": true,
+    "workerd@1.20261012.1": true
   }
 }
