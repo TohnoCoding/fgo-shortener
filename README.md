@@ -191,7 +191,7 @@ You'll need:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/TohnoCoding/fgo-shortener
+git clone https://github.com/TohnoCoding/fgo-shortener.git
 cd fgo-shortener
 npm install
 ```
