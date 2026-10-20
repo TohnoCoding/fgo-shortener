@@ -46,10 +46,6 @@ These changes are not necessarily limited to configuration values. Different use
 
 The project is therefore best understood as an FGO Checklist-specific implementation that can be adapted by developers who understand the consequences of the changes they make, rather than a general-purpose shortener that works for every use case without modification.
 
-## License
-
-This project is licensed under the MIT License. See [`LICENSE`](LICENSE) for the full license text.
-
 ## API
 
 ### Create a short link
@@ -195,8 +191,8 @@ You'll need:
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/TohnoCoding/fgo-shortener
+cd fgo-shortener
 npm install
 ```
 
