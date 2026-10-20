@@ -196,8 +196,6 @@ cd fgo-shortener
 npm install
 ```
 
-Replace the placeholders with the repository URL and directory name.
-
 ### 2. Configure Wrangler
 
 Review `wrangler.jsonc` and configure the D1 database binding and environment variables for your instance.
