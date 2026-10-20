@@ -6,7 +6,6 @@ import { checkURL } from "./validations";
 
 const sourcechars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const MAX_URL_BYTES = 64 * 1024;
-const ALLOWED_ORIGIN = "https://tohnocoding.github.io";
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		const fullurl = new URL(request.url);
@@ -17,7 +16,7 @@ export default {
 			if (headerCheck !== null) {
 				return headerCheck;
 			} else return new Response("Invalid preflight request",
-				{ status: 400, headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+				{ status: 400, headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 		} else if (method === "GET") {
 			if (pathname === "/api/health") {
 				return new Response(JSON.stringify({ 'status': 'ok', 'url': fullurl, 
@@ -40,7 +39,7 @@ export default {
 			{
 				if (pathname === "/api/shorten") {
 					const origin = request.headers.get("Origin");
-					if (origin !== ALLOWED_ORIGIN) {
+					if (origin !== env.ALLOWED_ORIGIN) {
 						return new Response("Invalid origin", { status: 403 });
 					}
 					const data = await request.json();
@@ -56,7 +55,7 @@ export default {
 							});
 							if (!success) {
     							return new Response("Too many requests", { status: 429,
-        							headers: { "Access-Control-Allow-Origin": ALLOWED_ORIGIN, 
+        							headers: { "Access-Control-Allow-Origin": env.ALLOWED_ORIGIN, 
 										"Retry-After": "60" } });
 							}
 							var url = new URL(data.long);
@@ -65,30 +64,30 @@ export default {
 						} else return postRequest;
 					} catch (error) {
 						if (error instanceof TypeError) return new Response("Possible malformed URL",
-							{ status: 400, headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+							{ status: 400, headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 						else if (error instanceof SyntaxError) return new Response("Syntax error",
-							{ status: 400, headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+							{ status: 400, headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 						else return new Response("Invalid request body", 
-							{ status: 400, headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+							{ status: 400, headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 					}
 					try {
 						var slug = await selectFromOrInsertToDatabase(data.long, env, 0);
 						return new Response(JSON.stringify({ 'status': 'ok', 'short': slug }),
 							{ headers: { 'Content-Type': 'application/json', 
-								'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+								'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 					} catch {
 						return new Response("Bad database juju", { status: 500, 
-							headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+							headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 					}
 				} else {
 					return new Response("Bad object", { status: 400,
-						headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+						headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 				}	
 			} catch {
 				return new Response("Invalid JSON request object", { status: 400,
-					headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+					headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 			}
 		} else return new Response("Not found", { status: 404,
-			headers: { 'Access-Control-Allow-Origin': ALLOWED_ORIGIN } });
+			headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 	}
 } satisfies ExportedHandler<Env>;
