@@ -1,6 +1,6 @@
 # FGO List Shortener
 
-A lightweight URL-shortening service built with **Cloudflare Workers, TypeScript, and Cloudflare D1** for [FGO Checklist](https://tohnocoding.github.io/fgochecklist/).
+A lightweight URL-shortening service built with **Cloudflare Workers, TypeScript, and Cloudflare D1** for [FGO Checklist](https://tohnocoding.github.io/fgochecklist/). Also my first experience working with TypeScript, after decades of JavaScript and jQuery.
 
 FGO Checklist stores a user's roster and wishlist in the `pak` query-string parameter. As the roster grows, these URLs can become very long and inconvenient to share. This service stores eligible checklist URLs in a database and returns compact links that redirect to the original URL.
 
