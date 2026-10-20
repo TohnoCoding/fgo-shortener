@@ -1,12 +1,9 @@
 import { generateSlug } from "./slug";
 
 export async function selectFromOrInsertToDatabase(long_url: string, env: Env, retries: number = 0): Promise<string> {
-    // const result = await findSlugByUrl(long_url, env);
-    // if (result !== null) return result;
-	const database = env.DBLocal;
-	const slug = generateSlug() ;
+    const slug = generateSlug() ;
     try {
-        await database.prepare("INSERT INTO links (slug, long_url) VALUES (?, ?)").bind(slug, long_url).run();
+        await env.DB.prepare("INSERT INTO links (slug, long_url) VALUES (?, ?)").bind(slug, long_url).run();
         return slug;
     } catch (error) {
         if (error instanceof Error) {
@@ -26,8 +23,7 @@ export async function selectFromOrInsertToDatabase(long_url: string, env: Env, r
 }
 
 export async function findSlugByUrl(longUrl: string, env: Env): Promise<string | null> {
-	const database = env.DBLocal;
-	const queryresult = await database.prepare("SELECT slug FROM links WHERE long_url = ?").bind(longUrl).first<{ slug: string }>();
+	const queryresult = await env.DB.prepare("SELECT slug FROM links WHERE long_url = ?").bind(longUrl).first<{ slug: string }>();
 	if (queryresult === null) {
 		return null;
 	} else {
@@ -36,8 +32,7 @@ export async function findSlugByUrl(longUrl: string, env: Env): Promise<string |
 }
 
 export async function findUrlBySlug(slug: string, env: Env): Promise<string | null> {
-    const database = env.DBLocal;
-	const queryresult = await database.prepare("SELECT long_url FROM links WHERE slug = ?").bind(slug).first<{ long_url: string }>();
+    const queryresult = await env.DB.prepare("SELECT long_url FROM links WHERE slug = ?").bind(slug).first<{ long_url: string }>();
     if (queryresult === null) {
         return null;
     } else {

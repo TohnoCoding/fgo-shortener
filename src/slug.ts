@@ -1,6 +1,6 @@
 export function generateSlug(): string {
-    var sourcechars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var result = crypto.getRandomValues(new Uint8Array(8));
+    const sourcechars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const result = crypto.getRandomValues(new Uint8Array(8));
     var slug = "";
     for (var i = 0; i < result.length; i++) {
         var elem = result[i];

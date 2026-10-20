@@ -1,33 +1,33 @@
-export function checkHeaders(request: Request): Response | null {
+export function checkHeaders(request: Request, env: Env): Response | null {
 	const origin = request.headers.get("Origin");
-	if (origin !== null && origin !== undefined && origin !== "https://tohnocoding.github.io") {
+	if (origin !== null && origin !== undefined && origin !== env.ALLOWED_ORIGIN) {
 		return new Response("Invalid origin",
-			{ status: 403, headers: { 'Access-Control-Allow-Origin': 'https://tohnocoding.github.io' } });
+			{ status: 403, headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 	}
 	if (request.headers.get("Access-Control-Request-Method")?.toUpperCase() !== "POST" ||
 		request.method?.toUpperCase() !== "OPTIONS") {
 		return new Response("Invalid request method",
-			{ status: 400, headers: { 'Access-Control-Allow-Origin': 'https://tohnocoding.github.io' } });
+			{ status: 400, headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 	}
 	if (request.headers.get("Access-Control-Request-Headers")?.toLowerCase() !== "content-type") {
 		return new Response("Invalid content request headers",
-			{ status: 400, headers: { 'Access-Control-Allow-Origin': 'https://tohnocoding.github.io' } });
+			{ status: 400, headers: { 'Access-Control-Allow-Origin': env.ALLOWED_ORIGIN } });
 	}
 	return new Response(null, { status: 204, headers: {
-		"Access-Control-Allow-Origin": "https://tohnocoding.github.io",
+		"Access-Control-Allow-Origin": env.ALLOWED_ORIGIN,
 		"Access-Control-Allow-Methods": "POST, OPTIONS",
 		"Access-Control-Allow-Headers": "Content-Type",
 	} });
 }
 
-export async function checkPostRequest(request: Request, data: unknown): Promise<Response | null> {
+export async function checkPostRequest(request: Request, env: Env, data: unknown): Promise<Response | null> {
 	if (data === null || data === undefined) {
 		return new Response("Empty request body", { status: 400 });
 	}
 	if (Array.isArray(data)) {
 		return new Response("Array-type request body not allowed", { status: 400 });
 	}
-	if (request.headers.get("Origin") !== "https://tohnocoding.github.io") {
+	if (request.headers.get("Origin") !== env.ALLOWED_ORIGIN) {
 		return new Response("Invalid origin", { status: 403 });
 	}
 	if (!isValidPostData(data)) {
@@ -36,9 +36,9 @@ export async function checkPostRequest(request: Request, data: unknown): Promise
 	return null;
 }
 
-export function checkURL(url: URL): Response | null {
-	if (url.hostname !== "tohnocoding.github.io" || 
-		url.pathname !== "/fgochecklist/" || url.protocol !== "https:") {
+export function checkURL(url: URL, env: Env): Response | null {
+	if (url.hostname !== env.ALLOWED_HOSTNAME || 
+		url.pathname !== env.ALLOWED_PATHNAME || url.protocol !== "https:") {
 		return new Response("Invalid source URL", { status: 400 });
 	}
 	if (url.username !== "" || url.password !== "" || url.port !== "") {

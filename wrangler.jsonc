@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "fgo-shortener",
+	"name": "fgolist",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-10-06",
 	"observability": {
@@ -9,24 +9,36 @@
 	"upload_source_maps": true,
 	"d1_databases": [
 		{
-			"binding": "DBLocal",
+			"binding": "DB",
 			"database_name": "fgo-shortener-db",
 			"database_id": "00000000-0000-0000-0000-000000000001"
-		},
-		{
-			"binding": "DBRemote",
-			"database_name": "fgo-shortener-db",
-			"database_id": "e7127f3f-a9b0-4dc5-9609-d03e28b2749f"
 		}
 	],
-	"ratelimits": [
-		{
-			"name": "CREATE_RATE_LIMITER",
-			"namespace_id": "1001",
-			"simple": {
-				"limit": 5,
-				"period": 60
-			}
+	"env": {
+		"production": {
+			"name": "list",
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "fgo-shortener-db",
+					"database_id": "e7127f3f-a9b0-4dc5-9609-d03e28b2749f"
+				}
+			],
+			"ratelimits": [
+				{
+					"name": "CREATE_RATE_LIMITER",
+					"namespace_id": "1001",
+					"simple": {
+						"limit": 5,
+						"period": 60
+					}
+				}
+			]
+		},
+		"vars": {
+			"ALLOWED_ORIGIN": "https://tohnocoding.github.io",
+			"ALLOWED_HOSTNAME": "tohnocoding.github.io",
+			"ALLOWED_PATHNAME": "/fgochecklist/"
 		}
-	]
+	}
 }
