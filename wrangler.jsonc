@@ -33,12 +33,12 @@
 						"period": 60
 					}
 				}
-			]
-		},
-		"vars": {
-			"ALLOWED_ORIGIN": "https://tohnocoding.github.io",
-			"ALLOWED_HOSTNAME": "tohnocoding.github.io",
-			"ALLOWED_PATHNAME": "/fgochecklist/"
+			],
+			"vars": {
+				"ALLOWED_ORIGIN": "https://tohnocoding.github.io",
+				"ALLOWED_HOSTNAME": "tohnocoding.github.io",
+				"ALLOWED_PATHNAME": "/fgochecklist/"
+			}
 		}
 	}
 }
